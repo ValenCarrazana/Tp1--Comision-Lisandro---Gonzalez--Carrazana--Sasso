@@ -5,6 +5,16 @@ let tiempoInicial;
 let duracion = 250;
 let img;
 
+// Arreglo de triángulos 
+let triangulos = [
+  { x1: 100, y1: 100, x2: 200, y2: 200, x3: 300, y3: 100 },
+  { x1: 30, y1: 75, x2: 58, y2: 20, x3: 86, y3: 75},
+  { x1: 200, y1: 500, x2: 370, y2: 600, x3: 400, y3: 500 },
+  { x1: 150, y1: 350, x2: 520, y2: 440, x3: 670, y3: 600 },
+  { x1: 0, y1: 300, x2: 500, y2: 400, x3: 650, y3: 300 }
+  
+];
+
 function preload() {
   img = loadImage('img/recurso1.png');
 }
@@ -18,44 +28,20 @@ function setup() {
 }
 
 function draw() {
-  if (totalTriangulos < 80) {
-    // número de filas
-    let rows = 6;
-    // número de columnas
-    let cols = 4;
-
-    // ancho de cada columna
-    let rectWidth = width / (cols + 1);
-
-    // altura de cada fila
-    let rectHeight = height / (rows + 1);
-
+  if (totalTriangulos < triangulos.length) {
     let tiempoActual = millis();
 
     if (tiempoActual > tiempoInicial + duracion) {
-      // Genera tamaños aleatorios para el triángulo
-      let triangleSize = random(1, 2) * rectWidth;
-      rotate(random(10,300));
-
-      // Genera puntos aleatorios para los vértices del triángulo
-      let x1 = random(cols + 1) * rectWidth - width/2;
-      let y1 = random(rows + 1) * rectHeight - height/2;
-      let x2 = x1 + random(-0.2, 0.2) * rectWidth;
-      let y2 = y1 - triangleSize + random(-0.2, 0.2) * rectHeight;
-      let x3 = x1 + triangleSize + random(-0.2, 0.2) * rectWidth;
-      let y3 = y1 + random(-0.2, 0.2) * rectHeight;
+      let triangulo = triangulos[totalTriangulos];
 
       // Dibuja el triángulo con textura o color aleatorio
       textura(mouseX);
       strokeWeight(3);
       beginShape();
-      triangle(x1, y1, x2, y2, x3, y3);
+      triangle(triangulo.x1, triangulo.y1, triangulo.x2, triangulo.y2, triangulo.x3, triangulo.y3);
       endShape(CLOSE);
 
-      // Incrementa el contador de triángulos dibujados
       totalTriangulos++;
-
-      // Actualiza el tiempo inicial para el siguiente triángulo
       tiempoInicial = millis();
     }
   }
